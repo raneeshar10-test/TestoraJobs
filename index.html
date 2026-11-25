@@ -39,16 +39,23 @@ button{font:inherit;cursor:pointer}.btn{background:var(--blue);color:#fff;border
 .detail h2{margin:0;font-size:18px;line-height:1.35}.detail h4{margin:16px 0 6px}.detail ul{margin:0;padding-left:18px;line-height:1.7;color:#45516b}
 .hr{background:#f6f8fd;border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:14px}
 .hr a{color:var(--blue);word-break:break-all}
-textarea,input[type=text],input[type=email]{width:100%;border:1px solid #dce2ed;border-radius:8px;padding:10px;font:inherit;margin:6px 0;color:var(--navy)}
+textarea,input[type=text],input[type=email],input[type=tel],input[type=number]{width:100%;border:1px solid #dce2ed;border-radius:8px;padding:10px;font:inherit;margin:6px 0;color:var(--navy)}
 textarea{min-height:110px;resize:vertical}
 .drop{border:1px dashed #9aafea;border-radius:10px;padding:14px;text-align:center;color:var(--mut);margin-bottom:8px;background:#f8faff}
 .pill{display:inline-block;background:#e2f5eb;color:#126942;border-radius:12px;padding:2px 10px;font-size:12px;margin:2px 3px 2px 0}
+.field-label{display:block;color:#45516b;font-size:12px;font-weight:700;margin-top:8px}
+.contact-row{display:flex;align-items:center;gap:6px}.contact-row input{min-width:0}.contact-row .btn{flex:none;padding:8px 10px;font-size:12px}
+.verification-status{margin:0 0 8px;min-height:18px}.verified{color:var(--ok);font-weight:700}
+.profile-divider{border:0;border-top:1px solid var(--line);margin:16px 0}
+.recommendation-list{display:grid;gap:8px;margin-top:8px}.recommendation-item{border:1px solid var(--line);border-radius:8px;padding:10px}
+.recommendation-item b{display:block;color:var(--navy)}.recommendation-item span{font-size:12px;color:var(--mut)}
+.alert-status{margin:8px 0 0}.demo-code{background:#f6f8fd;border-radius:7px;padding:7px 9px;margin:3px 0 8px}
 .modal{position:fixed;inset:0;background:rgba(11,24,53,.62);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
 .modal.on{display:flex}.modal .card{max-width:480px;width:100%;max-height:90vh;overflow:auto}
 .note{font-size:12px;color:var(--mut)}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 20px;border-radius:24px;display:none;z-index:30;box-shadow:var(--shadow)}
 :focus-visible{outline:2px solid #7092ff;outline-offset:2px}
 @media(max-width:1050px){.wrap{grid-template-columns:210px minmax(0,1fr)}.wrap>aside:last-child{grid-column:2;display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:14px}.wrap>aside:last-child .detail{margin-top:0!important}}
-@media(max-width:700px){header{height:64px;padding:0 18px}header nav{gap:12px}header nav a{display:none}.hero{padding:42px 18px 34px}.hero h1{font-size:34px}.hero p{font-size:14px}.search{display:grid;grid-template-columns:1fr 1fr;border-radius:12px;padding:9px}.search input{grid-column:1/-1;min-width:0;border-bottom:1px solid var(--line)}.search select{min-width:0;padding:12px 8px}.search select+select{border-left:1px solid var(--line)}.search .btn{grid-column:1/-1}.wrap{display:flex;flex-direction:column;padding:18px 14px 36px}.wrap>aside,.wrap>section{width:100%}.filters{position:static}.wrap>aside:last-child{display:flex;flex-direction:column}.wrap>aside:last-child .detail{width:100%}.results-head{align-items:flex-start}.card{padding:15px}.row{gap:6px}.score{padding:4px 8px}}
+@media(max-width:700px){header{height:64px;padding:0 18px}header nav{gap:12px}header nav a{display:none}.hero{padding:42px 18px 34px}.hero h1{font-size:34px}.hero p{font-size:14px}.search{display:grid;grid-template-columns:1fr 1fr;border-radius:12px;padding:9px}.search input{grid-column:1/-1;min-width:0;border-bottom:1px solid var(--line)}.search select{min-width:0;padding:12px 8px}.search select+select{border-left:1px solid var(--line)}.search .btn{grid-column:1/-1}.wrap{display:flex;flex-direction:column;padding:18px 14px 36px}.wrap>aside,.wrap>section{width:100%}.filters{position:static}.wrap>aside:last-child{display:flex;flex-direction:column}.wrap>aside:last-child .detail{width:100%}.results-head{align-items:flex-start}.results-head .note{white-space:normal}.card{padding:15px}.row{gap:6px}.score{padding:4px 8px}}
 </style>
 </head>
 <body>
@@ -69,7 +76,7 @@ textarea{min-height:110px;resize:vertical}
     <button class="btn" type="submit">Search jobs</button>
   </form>
   <div class="quick-links"><span>Popular:</span><button type="button" data-type="Automation">Automation</button><button type="button" data-type="Manual">Manual testing</button><button type="button" data-query="SDET">SDET</button><button type="button" data-type="Performance">Performance</button></div>
-  <p class="demo-disclaimer">Demo listings only — job details and recruiter contacts are sample placeholders.</p>
+  <p class="demo-disclaimer">Demo listings only — live job imports require permitted APIs or partner feeds; sample contacts are not real.</p>
  </div>
 </section>
 
@@ -97,13 +104,40 @@ textarea{min-height:110px;resize:vertical}
 
   <aside>
     <div class="card" id="cvbox">
+      <h3 style="margin:0 0 8px">Create your job profile</h3>
+      <p class="note">Your contact details and CV stay in this browser session in this demo.</p>
+      <label class="field-label" for="candidateName">Your name</label>
+      <input type="text" id="candidateName" autocomplete="name" placeholder="Full name">
+      <label class="field-label" for="candidateEmail">Email address</label>
+      <div class="contact-row"><input type="email" id="candidateEmail" autocomplete="email" placeholder="you@example.com"><button class="btn ghost" type="button" onclick="sendDemoOtp('email')">Send code</button></div>
+      <div class="contact-row"><input type="text" id="emailOtp" inputmode="numeric" maxlength="6" placeholder="6-digit email code" aria-label="Email verification code"><button class="btn ghost" type="button" onclick="verifyDemoOtp('email')">Verify</button></div>
+      <div class="note verification-status" id="emailStatus">Email not verified</div>
+      <label class="field-label" for="candidatePhone">Phone number</label>
+      <div class="contact-row"><input type="tel" id="candidatePhone" autocomplete="tel" placeholder="+971 50 123 4567"><button class="btn ghost" type="button" onclick="sendDemoOtp('phone')">Send code</button></div>
+      <div class="contact-row"><input type="text" id="phoneOtp" inputmode="numeric" maxlength="6" placeholder="6-digit SMS code" aria-label="Phone verification code"><button class="btn ghost" type="button" onclick="verifyDemoOtp('phone')">Verify</button></div>
+      <div class="note verification-status" id="phoneStatus">Phone not verified</div>
+      <hr class="profile-divider">
       <h3 style="margin:0 0 8px">Match jobs to your CV</h3>
       <div class="drop">Upload PDF, DOCX or TXT<br><input type="file" id="cvfile" accept=".pdf,.docx,.txt" style="margin-top:8px;max-width:100%"></div>
       <div class="note" style="margin-bottom:4px">or paste your CV text</div>
       <textarea id="cvtext" placeholder="Paste CV text here"></textarea>
       <button class="btn" style="width:100%" onclick="analyseCV()">Find matching jobs</button>
       <div id="cvres" style="margin-top:10px"></div>
-      <p class="note">Your CV is read in your browser only. Nothing is uploaded until you click Send to HR.</p>
+      <p class="note">This demo reads your CV in the browser only; it is not uploaded or emailed.</p>
+      <div id="recommendations" class="hr">
+        <b>Exact job matches</b>
+        <p class="note" style="margin:5px 0 0">Add a CV with skills and years of experience to see jobs matching every listed skill.</p>
+      </div>
+      <hr class="profile-divider">
+      <h3 style="margin:0 0 8px">Job alerts</h3>
+      <label class="field-label" for="prefCity">Preferred location</label>
+      <select id="prefCity" style="width:100%;border:1px solid #dce2ed;border-radius:8px;padding:10px;margin:6px 0;font:inherit;color:var(--navy)"><option value="">Any UAE location</option><option>Dubai</option><option>Abu Dhabi</option><option>Sharjah</option><option>Ajman</option><option>Ras Al Khaimah</option></select>
+      <label class="field-label" for="profileExperience">Years of experience (optional override)</label>
+      <input type="number" id="profileExperience" min="0" max="40" step="0.5" placeholder="Detected from CV if blank">
+      <label><input type="checkbox" id="alertToggle"> Enable similar-job email alerts (demo)</label>
+      <p class="note alert-status" id="alertStatus">Disabled. Alerts are not sent from this demo.</p>
+      <button class="btn ghost sm" type="button" onclick="previewAlerts()" style="margin-top:8px">Preview matching alerts</button>
+      <p class="demo-code note" id="alertPreview" aria-live="polite">Alert previews will appear here. No email will be sent.</p>
     </div>
     <div class="card detail" id="detail" style="margin-top:14px"><div class="note">Select a job to see full details, HR contact and apply.</div></div>
   </aside>
@@ -111,17 +145,12 @@ textarea{min-height:110px;resize:vertical}
 
 <div class="modal" id="applyModal" role="dialog" aria-modal="true">
   <div class="card">
-    <h3 style="margin:0" id="apTitle">Apply</h3>
+    <h3 style="margin:0" id="apTitle">Application preview</h3>
     <p class="note" id="apTo"></p>
-    <input type="text" id="apName" placeholder="Your full name">
-    <input type="email" id="apEmail" placeholder="Your email">
-    <textarea id="apMsg"></textarea>
     <div class="note" id="apCv"></div>
     <div style="display:flex;gap:8px;margin-top:12px">
-      <button class="btn" onclick="sendCV()">Send to HR</button>
-      <button class="btn ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn" onclick="closeModal()">Close preview</button>
     </div>
-    <p class="note" id="apHint"></p>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -129,13 +158,6 @@ textarea{min-height:110px;resize:vertical}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script>
-/* ============ CONFIG ============
- To make CV delivery automatic (with the file attached), create a free form at
- https://web3forms.com or https://formspree.io and paste its endpoint here.
- Leave empty to use the mailto: fallback (opens the user's email app). */
-const FORM_ENDPOINT = "";
-const WEB3FORMS_KEY = ""; // only if using web3forms.com
-
 /* ============ JOB DATA ============
  SAMPLE DATA ONLY – company names, HR emails and LinkedIn URLs below are placeholders.
  Replace with real, publicly listed or consented contacts before going live. */
@@ -180,6 +202,9 @@ const ALIAS = {"selenium webdriver":"selenium","rest-assured":"rest assured","re
 const SKILLS = [...new Set(JOBS.flatMap(j=>j.skills))];
 let CV = {text:"",skills:[],years:null,file:null,name:""};
 let current = null;
+const DEMO_OTP = "123456";
+const verificationCodes = {email:"",phone:""};
+const verifiedContacts = {email:"",phone:""};
 
 function norm(t){return " "+t.toLowerCase().replace(/[^a-z0-9+#\/.\- ]/g," ")+" ";}
 function extractSkills(text){
@@ -197,12 +222,102 @@ function matchJob(job){
   const miss = job.skills.filter(s=>!CV.skills.includes(s));
   let skillScore = hit.length / job.skills.length;
   let expScore = 1;
-  if(CV.years!==null){
-    if(CV.years < job.expMin) expScore = Math.max(0, 1 - (job.expMin-CV.years)*0.25);
-    else if(CV.years > job.expMax+3) expScore = 0.8;
+  const years=candidateYears();
+  if(years!==null){
+    if(years < job.expMin) expScore = Math.max(0, 1 - (job.expMin-years)*0.25);
+    else if(years > job.expMax+3) expScore = 0.8;
   }
   const pct = Math.round((skillScore*0.8 + expScore*0.2)*100);
   return {pct,hit,miss};
+}
+function exactMatches(){
+  const years=candidateYears();
+  if(!CV.skills.length || years===null) return [];
+  const city = document.getElementById("prefCity").value;
+  return JOBS.filter(job =>
+    job.skills.every(skill=>CV.skills.includes(skill)) &&
+    years>=job.expMin && years<=job.expMax &&
+    (!city || job.city===city)
+  );
+}
+function candidateYears(){
+  const manual=document.getElementById("profileExperience").value;
+  if(manual==="") return CV.years;
+  const years=Number(manual);
+  return Number.isFinite(years) && years>=0 && years<=40 ? years : null;
+}
+function updateRecommendations(){
+  const box=document.getElementById("recommendations");
+  if(!CV.skills.length || candidateYears()===null){
+    box.innerHTML="<b>Exact job matches</b><p class=\"note\" style=\"margin:5px 0 0\">Add a CV with recognized skills and years of experience to check exact matches.</p>";
+    return;
+  }
+  const rows=exactMatches();
+  box.innerHTML="<b>Exact job matches</b>"+(rows.length
+    ? `<div class="recommendation-list">${rows.map(job=>`<button class="recommendation-item" type="button" onclick="showJob(${job.id})"><b>${job.title}</b><span>${job.city} · ${job.expMin}–${job.expMax} years · all listed skills matched</span></button>`).join("")}</div>`
+    : "<p class=\"note\" style=\"margin:5px 0 0\">No exact matches for every listed skill, your experience, and preferred location. Try a broader search to see similar jobs.</p>");
+}
+function sendDemoOtp(channel){
+  const field=document.getElementById(channel==="email"?"candidateEmail":"candidatePhone");
+  const value=field.value.trim();
+  const valid=channel==="email" ? /^\S+@\S+\.\S+$/.test(value) : /^\+?[\d\s().-]{7,20}$/.test(value);
+  if(!valid){toast(channel==="email"?"Enter a valid email address.":"Enter a valid phone number.");return;}
+  verifiedContacts[channel]="";
+  if(channel==="email" && document.getElementById("alertToggle").checked){
+    document.getElementById("alertToggle").checked=false;
+    updateAlertStatus();
+  }
+  verificationCodes[channel]=DEMO_OTP;
+  const status=document.getElementById(channel==="email"?"emailStatus":"phoneStatus");
+  status.classList.remove("verified");
+  status.textContent=`Demo only: use code ${DEMO_OTP}. No ${channel==="email"?"email":"SMS"} was sent.`;
+}
+function verifyDemoOtp(channel){
+  const field=document.getElementById(channel==="email"?"candidateEmail":"candidatePhone");
+  const code=document.getElementById(channel==="email"?"emailOtp":"phoneOtp").value.trim();
+  const status=document.getElementById(channel==="email"?"emailStatus":"phoneStatus");
+  if(!verificationCodes[channel]){toast("Request a demo code first.");return;}
+  if(code!==verificationCodes[channel]){toast("That demo code is not correct.");return;}
+  verifiedContacts[channel]=field.value.trim();
+  status.classList.add("verified");
+  status.textContent=`${channel==="email"?"Email":"Phone"} verified for this demo session.`;
+  if(channel==="email" && document.getElementById("alertToggle").checked) updateAlertStatus();
+}
+function updateAlertStatus(){
+  const toggle=document.getElementById("alertToggle");
+  const status=document.getElementById("alertStatus");
+  if(!toggle.checked){
+    status.textContent="Disabled. Alerts are not sent from this demo.";
+    return;
+  }
+  status.textContent=`Enabled for ${document.getElementById("candidateEmail").value.trim()}. This demo cannot send email.`;
+}
+function toggleAlerts(){
+  const toggle=document.getElementById("alertToggle");
+  if(toggle.checked && verifiedContacts.email!==document.getElementById("candidateEmail").value.trim()){
+    toggle.checked=false;
+    toast("Verify your email address before enabling alerts.");
+  }else if(toggle.checked && !CV.skills.length){
+    toggle.checked=false;
+    toast("Add a CV with testing skills before enabling similar-job alerts.");
+  }
+  updateAlertStatus();
+  if(toggle.checked) previewAlerts();
+}
+function previewAlerts(){
+  const toggle=document.getElementById("alertToggle");
+  const output=document.getElementById("alertPreview");
+  if(!toggle.checked){toast("Enable alerts to preview similar jobs.");return;}
+  const city=document.getElementById("prefCity").value;
+  const years=candidateYears();
+  const rows=JOBS.map(job=>({job,match:matchJob(job)})).filter(({job,match})=>
+    match && match.pct>=50 &&
+    (years===null || (years>=job.expMin-1 && years<=job.expMax+1)) &&
+    (!city || job.city===city)
+  );
+  output.textContent=rows.length
+    ? `Demo email preview for ${document.getElementById("candidateEmail").value}: ${rows.map(({job})=>job.title).join(", ")}. No email was sent.`
+    : "No similar jobs match these alert preferences yet. No email was sent.";
 }
 
 /* ============ CV READING ============ */
@@ -232,6 +347,7 @@ function analyseCV(){
   r.innerHTML = CV.skills.length
    ? `<b>Skills found:</b><br>${CV.skills.map(s=>`<span class="pill">${s}</span>`).join("")}<div class="note" style="margin-top:6px">Experience detected: ${CV.years!==null?CV.years+" yrs":"not found"}</div>`
    : `<span style="color:var(--bad)">No testing skills detected. Add tools like Selenium, JIRA, Postman or SQL to your CV.</span>`;
+  updateRecommendations();
   render(true);
 }
 
@@ -273,42 +389,46 @@ function showJob(id){
    ${m?`<p><span class="score ${m.pct>=70?"s-hi":m.pct>=40?"s-mid":"s-lo"}">${m.pct}% match</span>${m.miss.length?`<br><span class="note">Missing from your CV: ${m.miss.join(", ")}</span>`:""}</p>`:""}
    <h4>Job description</h4><ul>${j.desc.map(d=>`<li>${d}</li>`).join("")}</ul>
    <h4>Key skills</h4><div class="tags">${j.skills.map(s=>`<span class="tag">${s}</span>`).join("")}</div>
-   <div class="hr"><b>Recruiter</b><br>${j.hr.name}<br>
-    ✉️ <a href="mailto:${j.hr.email}">${j.hr.email}</a><br>
-    🔗 <a href="${j.hr.linkedin}" target="_blank" rel="noopener">LinkedIn profile</a></div>
-   <button class="btn" style="width:100%;margin-top:14px" onclick="openModal(${j.id})">Apply &amp; send CV to HR</button>`;
+   <div class="hr"><b>Sample recruiter</b><br>${j.hr.name}<br>
+    <span class="note">${j.hr.email} · Demo contact only; not a real employer contact.</span></div>
+   <button class="btn" style="width:100%;margin-top:14px" onclick="openModal(${j.id})">Preview application</button>`;
   render();
 }
 
-/* ============ APPLY / SEND CV ============ */
+/* ============ APPLICATION PREVIEW ============ */
 function openModal(id){
-  const j=JOBS.find(x=>x.id===id); current=id;
-  if(!CV.file && CV.text.trim().length<30){ toast("Upload or paste your CV first."); document.getElementById("cvbox").scrollIntoView({behavior:"smooth"}); return; }
-  document.getElementById("apTitle").textContent="Apply: "+j.title;
+  const j=JOBS.find(x=>x.id===id);
+  document.getElementById("apTitle").textContent="Application preview: "+j.title;
   document.getElementById("apTo").textContent=`To: ${j.hr.name} <${j.hr.email}>`;
-  document.getElementById("apMsg").value=`Dear ${j.hr.name.replace(/ \(sample\)/,"")},\n\nI would like to apply for the ${j.title} position at ${j.company}. Please find my CV attached.\n\nKind regards,`;
-  document.getElementById("apCv").textContent = CV.file ? "Attached CV: "+CV.file.name : "No file uploaded – your pasted CV text will be included in the message.";
-  document.getElementById("apHint").textContent = FORM_ENDPOINT ? "Your CV will be delivered to HR directly." : "This opens your email app with the message ready. Attach your CV file there before sending.";
+  document.getElementById("apCv").textContent="Demo only: applications are not submitted and your CV is not shared. Recruiter details are sample placeholders.";
   document.getElementById("applyModal").classList.add("on");
 }
 function closeModal(){document.getElementById("applyModal").classList.remove("on");}
-async function sendCV(){
-  const j=JOBS.find(x=>x.id===current), name=document.getElementById("apName").value.trim(), email=document.getElementById("apEmail").value.trim(), msg=document.getElementById("apMsg").value;
-  if(!name||!/\S+@\S+\.\S+/.test(email)){toast("Enter your name and a valid email.");return;}
-  const subject=`Application: ${j.title} – ${name}`;
-  if(FORM_ENDPOINT){
-    const fd=new FormData(); fd.append("access_key",WEB3FORMS_KEY); fd.append("subject",subject); fd.append("name",name); fd.append("email",email);
-    fd.append("hr_email",j.hr.email); fd.append("job",j.title+" – "+j.company); fd.append("message",msg+"\n\n"+(CV.file?"":CV.text));
-    if(CV.file) fd.append("attachment",CV.file);
-    try{ const r=await fetch(FORM_ENDPOINT,{method:"POST",body:fd,headers:{Accept:"application/json"}}); if(!r.ok) throw 0; toast("CV sent to HR."); closeModal(); }
-    catch(e){ toast("Sending failed. Try again or email HR directly."); }
-    return;
-  }
-  const body = msg+`\n\nName: ${name}\nEmail: ${email}`+(CV.file?"\n\n(Please attach your CV: "+CV.file.name+")":"\n\n--- CV ---\n"+CV.text.slice(0,1500));
-  location.href=`mailto:${j.hr.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  closeModal();
-}
 function toast(t){const e=document.getElementById("toast");e.textContent=t;e.style.display="block";setTimeout(()=>e.style.display="none",3200);}
+document.getElementById("alertToggle").addEventListener("change",toggleAlerts);
+document.getElementById("prefCity").addEventListener("change",()=>{
+  updateRecommendations();
+  if(document.getElementById("alertToggle").checked) previewAlerts();
+});
+document.getElementById("profileExperience").addEventListener("input",()=>{
+  updateRecommendations();
+  if(document.getElementById("alertToggle").checked) previewAlerts();
+});
+["email","phone"].forEach(channel=>{
+  const field=document.getElementById(channel==="email"?"candidateEmail":"candidatePhone");
+  field.addEventListener("input",()=>{
+    if(verifiedContacts[channel]===field.value.trim()) return;
+    verificationCodes[channel]="";
+    verifiedContacts[channel]="";
+    const status=document.getElementById(channel==="email"?"emailStatus":"phoneStatus");
+    status.classList.remove("verified");
+    status.textContent=`${channel==="email"?"Email":"Phone"} not verified`;
+    if(channel==="email" && document.getElementById("alertToggle").checked){
+      document.getElementById("alertToggle").checked=false;
+      updateAlertStatus();
+    }
+  });
+});
 document.getElementById("searchForm").addEventListener("submit",e=>{e.preventDefault();render();});
 document.querySelectorAll(".quick-links button").forEach(button=>button.addEventListener("click",()=>{
   const type=button.dataset.type;
