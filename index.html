@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TestHire UAE – Software Tester Jobs in UAE</title>
+<style>
+:root{--blue:#275df5;--navy:#0f1d40;--bg:#f4f7fc;--line:#e1e7f2;--mut:#6b7691;--ok:#12a26b;--warn:#e08a00;--bad:#d9433f}
+*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--navy);font-size:14px}
+header{background:#fff;border-bottom:1px solid var(--line);padding:12px 5vw;display:flex;align-items:center;gap:24px;position:sticky;top:0;z-index:5}
+.logo{font-size:24px;font-weight:800;color:var(--navy)}.logo b{color:var(--blue)}
+header nav{margin-left:auto;display:flex;gap:10px}
+button{font:inherit;cursor:pointer}.btn{background:var(--blue);color:#fff;border:0;border-radius:22px;padding:9px 20px;font-weight:600}
+.btn.ghost{background:#fff;color:var(--blue);border:1.5px solid var(--blue)}.btn.sm{padding:6px 14px;font-size:13px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.hero{background:linear-gradient(180deg,#e9f0ff,var(--bg));padding:36px 5vw 28px;text-align:center}
+.hero h1{margin:0 0 6px;font-size:30px}.hero p{margin:0 0 20px;color:var(--mut)}
+.search{max-width:900px;margin:auto;background:#fff;border-radius:40px;box-shadow:0 4px 18px rgba(39,93,245,.15);display:flex;padding:6px;gap:4px;flex-wrap:wrap}
+.search input,.search select{flex:1;min-width:150px;border:0;outline:0;padding:12px 18px;font:inherit;background:transparent;border-right:1px solid var(--line)}
+.search .btn{border-radius:30px;padding:12px 32px}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 5vw;display:grid;grid-template-columns:240px 1fr 300px;gap:18px}
+@media(max-width:1000px){.wrap{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+.filters h3{margin:0 0 10px;font-size:15px}.filters label{display:flex;gap:8px;padding:4px 0;cursor:pointer}
+.filters hr{border:0;border-top:1px solid var(--line);margin:12px 0}
+.job{margin-bottom:12px;cursor:pointer;transition:box-shadow .15s}.job:hover{box-shadow:0 4px 16px rgba(15,29,64,.1)}
+.job.sel{border-color:var(--blue)}.job h2{margin:0;font-size:17px;color:var(--navy)}.job:hover h2{color:var(--blue)}
+.co{color:var(--mut);margin:2px 0 8px}.meta{display:flex;flex-wrap:wrap;gap:14px;color:var(--mut);font-size:13px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.tag{background:#eef2fb;border-radius:14px;padding:3px 10px;font-size:12px}
+.tag.hit{background:#dff6ec;color:#0c7a50}.tag.miss{background:#fdeceb;color:var(--bad)}
+.row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.score{font-weight:700;border-radius:20px;padding:4px 12px;font-size:13px;white-space:nowrap}
+.s-hi{background:#dff6ec;color:var(--ok)}.s-mid{background:#fff3dc;color:var(--warn)}.s-lo{background:#fdeceb;color:var(--bad)}
+.posted{font-size:12px;color:var(--mut);margin-top:8px}
+.detail h2{margin:0}.detail h4{margin:16px 0 6px}.detail ul{margin:0;padding-left:18px;line-height:1.6}
+.hr{background:#f6f9ff;border:1px dashed #b9c9f5;border-radius:10px;padding:12px;margin-top:14px}
+.hr a{color:var(--blue);word-break:break-all}
+textarea,input[type=text],input[type=email]{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;margin:6px 0}
+textarea{min-height:110px;resize:vertical}
+.drop{border:2px dashed #b9c9f5;border-radius:10px;padding:14px;text-align:center;color:var(--mut);margin-bottom:8px}
+.pill{display:inline-block;background:#dff6ec;color:#0c7a50;border-radius:12px;padding:2px 10px;font-size:12px;margin:2px 3px 2px 0}
+.modal{position:fixed;inset:0;background:rgba(15,29,64,.55);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+.modal.on{display:flex}.modal .card{max-width:480px;width:100%;max-height:90vh;overflow:auto}
+.note{font-size:12px;color:var(--mut)}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 20px;border-radius:24px;display:none;z-index:30}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Test<b>Hire</b> <span style="font-size:12px;color:var(--mut);font-weight:500">UAE</span></div>
+  <nav><button class="btn ghost sm" onclick="document.getElementById('cvbox').scrollIntoView({behavior:'smooth'})">Upload CV</button></nav>
+</header>
+
+<section class="hero">
+  <h1>Find your next Software Tester job in the UAE</h1>
+  <p>QA, Automation, SDET, Performance &amp; Mobile testing roles across Dubai, Abu Dhabi, Sharjah and more</p>
+  <div class="search">
+    <input id="q" placeholder="Skills, designation or company" aria-label="Keyword">
+    <select id="city" aria-label="City"><option value="">All UAE</option><option>Dubai</option><option>Abu Dhabi</option><option>Sharjah</option><option>Ajman</option><option>Ras Al Khaimah</option></select>
+    <select id="expSel" aria-label="Experience"><option value="">Experience</option><option value="0">Fresher (0 yrs)</option><option value="2">2 yrs</option><option value="5">5 yrs</option><option value="8">8+ yrs</option></select>
+    <button class="btn" onclick="render()">Search</button>
+  </div>
+</section>
+
+<main class="wrap">
+  <aside class="card filters" aria-label="Filters">
+    <h3>Filters</h3>
+    <b>Job type</b>
+    <label><input type="checkbox" name="type" value="Automation"> Automation / SDET</label>
+    <label><input type="checkbox" name="type" value="Manual"> Manual testing</label>
+    <label><input type="checkbox" name="type" value="Performance"> Performance</label>
+    <label><input type="checkbox" name="type" value="Mobile"> Mobile</label>
+    <hr><b>Posted</b>
+    <label><input type="radio" name="post" value="" checked> Any time</label>
+    <label><input type="radio" name="post" value="1"> Last 24 hours</label>
+    <label><input type="radio" name="post" value="7"> Last 7 days</label>
+    <label><input type="radio" name="post" value="30"> Last 30 days</label>
+    <hr><label><input type="checkbox" id="onlyMatch"> Only show matches ≥ 50%</label>
+    <button class="btn ghost sm" style="margin-top:10px" onclick="render()">Apply</button>
+  </aside>
+
+  <section>
+    <div id="count" style="margin-bottom:10px;font-weight:600"></div>
+    <div id="list"></div>
+  </section>
+
+  <aside>
+    <div class="card" id="cvbox">
+      <h3 style="margin:0 0 8px">Match jobs to your CV</h3>
+      <div class="drop">Upload PDF, DOCX or TXT<br><input type="file" id="cvfile" accept=".pdf,.docx,.txt" style="margin-top:8px;max-width:100%"></div>
+      <div class="note" style="margin-bottom:4px">or paste your CV text</div>
+      <textarea id="cvtext" placeholder="Paste CV text here"></textarea>
+      <button class="btn" style="width:100%" onclick="analyseCV()">Find matching jobs</button>
+      <div id="cvres" style="margin-top:10px"></div>
+      <p class="note">Your CV is read in your browser only. Nothing is uploaded until you click Send to HR.</p>
+    </div>
+    <div class="card detail" id="detail" style="margin-top:14px"><div class="note">Select a job to see full details, HR contact and apply.</div></div>
+  </aside>
+</main>
+
+<div class="modal" id="applyModal" role="dialog" aria-modal="true">
+  <div class="card">
+    <h3 style="margin:0" id="apTitle">Apply</h3>
+    <p class="note" id="apTo"></p>
+    <input type="text" id="apName" placeholder="Your full name">
+    <input type="email" id="apEmail" placeholder="Your email">
+    <textarea id="apMsg"></textarea>
+    <div class="note" id="apCv"></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn" onclick="sendCV()">Send to HR</button>
+      <button class="btn ghost" onclick="closeModal()">Cancel</button>
+    </div>
+    <p class="note" id="apHint"></p>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script>
+/* ============ CONFIG ============
+ To make CV delivery automatic (with the file attached), create a free form at
+ https://web3forms.com or https://formspree.io and paste its endpoint here.
+ Leave empty to use the mailto: fallback (opens the user's email app). */
+const FORM_ENDPOINT = "";
+const WEB3FORMS_KEY = ""; // only if using web3forms.com
+
+/* ============ JOB DATA ============
+ SAMPLE DATA ONLY – company names, HR emails and LinkedIn URLs below are placeholders.
+ Replace with real, publicly listed or consented contacts before going live. */
+const D = n => { const d = new Date(); d.setDate(d.getDate() - n); return d.toISOString().slice(0,10); };
+const JOBS = [
+ {id:1,title:"Senior QA Automation Engineer",company:"Sample Fintech LLC",city:"Dubai",type:"Automation",expMin:5,expMax:8,salary:"AED 18,000 – 25,000 / month",posted:D(1),
+  skills:["selenium","java","testng","api testing","rest assured","jenkins","ci/cd","git"],
+  desc:["Design and maintain Selenium + Java automation frameworks","Automate REST API tests and integrate into Jenkins pipelines","Work with developers in Agile sprints and review test coverage","Mentor junior testers"],
+  hr:{name:"Aisha Khan (sample)",email:"hr.sample1@example.com",linkedin:"https://www.linkedin.com/in/sample-hr-1"}},
+ {id:2,title:"Manual Tester",company:"Sample Retail Group",city:"Abu Dhabi",type:"Manual",expMin:1,expMax:3,salary:"AED 6,000 – 9,000 / month",posted:D(3),
+  skills:["manual testing","test cases","jira","regression testing","sql","bug reporting"],
+  desc:["Write and execute test cases for web and mobile apps","Log and track defects in Jira","Perform regression and UAT support","Validate data using SQL queries"],
+  hr:{name:"Omar Hassan (sample)",email:"hr.sample2@example.com",linkedin:"https://www.linkedin.com/in/sample-hr-2"}},
+ {id:3,title:"SDET – Cypress / Playwright",company:"Sample Cloud Systems",city:"Dubai",type:"Automation",expMin:3,expMax:6,salary:"AED 15,000 – 20,000 / month",posted:D(0),
+  skills:["cypress","playwright","javascript","typescript","api testing","postman","git","ci/cd"],
+  desc:["Build end-to-end test suites with Cypress and Playwright","Create reusable test utilities in TypeScript","Own quality gates in CI/CD","Collaborate with product on acceptance criteria"],
+  hr:{name:"Priya Nair (sample)",email:"hr.sample3@example.com",linkedin:"https://www.linkedin.com/in/sample-hr-3"}},
+ {id:4,title:"Performance Test Engineer",company:"Sample Telecom FZ-LLC",city:"Dubai",type:"Performance",expMin:4,expMax:7,salary:"AED 14,000 – 19,000 / month",posted:D(6),
+  skills:["jmeter","loadrunner","performance testing","gatling","sql","monitoring","grafana"],
+  desc:["Plan and execute load, stress and soak tests","Create JMeter scripts and analyse bottlenecks","Report findings with Grafana dashboards","Support capacity planning"],
+  hr:{name:"Rahul Mehta (sample)",email:"hr.sample4@example.com",linkedin:"https://www.linkedin.com/in/sample-hr-4"}},
+ {id:5,title:"Mobile App Tester (iOS & Android)",company:"Sample Delivery Tech",city:"Sharjah",type:"Mobile",expMin:2,expMax:4,salary:"AED 8,000 – 12,000 / month",posted:D(10),
+  skills:["mobile testing","appium","android","ios","manual testing","jira","api testing"],
+  desc:["Test native apps on real devices and emulators","Automate smoke tests with Appium","Verify release builds before store submission","Work closely with UX and dev teams"],
+  hr:{name:"Sara Ali (sample)",email:"hr.sample5@example.com",linkedin:"https://www.linkedin.com/in/sample-hr-5"}},
+ {id:6,title:"QA Lead",company:"Sample Banking Solutions",city:"Abu Dhabi",type:"Automation",expMin:8,expMax:12,salary:"AED 25,000 – 32,000 / month",posted:D(2),
+  skills:["test strategy","selenium","java","jira","agile","team leadership","api testing","jenkins","sql"],
+  desc:["Define test strategy and quality metrics","Lead a team of 6 testers and SDETs","Own release sign-off and risk reporting","Drive automation roadmap"],
+  hr:{name:"Fatima Al Zaabi (sample)",email:"hr.sample6@example.com",linkedin:"https://www.linkedin.com/in/sample-hr-6"}},
+ {id:7,title:"Junior QA Engineer (Fresher)",company:"Sample Software House",city:"Ajman",type:"Manual",expMin:0,expMax:1,salary:"AED 3,500 – 5,000 / month",posted:D(15),
+  skills:["manual testing","test cases","sql","bug reporting","jira"],
+  desc:["Learn and execute functional test cases","Report bugs with clear steps and evidence","Assist senior testers with regression cycles","Training provided"],
+  hr:{name:"Hamad Saeed (sample)",email:"hr.sample7@example.com",linkedin:"https://www.linkedin.com/in/sample-hr-7"}},
+ {id:8,title:"API & Integration Tester",company:"Sample Logistics PJSC",city:"Ras Al Khaimah",type:"Automation",expMin:3,expMax:5,salary:"AED 10,000 – 14,000 / month",posted:D(22),
+  skills:["postman","api testing","rest assured","soapui","sql","java","git","agile"],
+  desc:["Test REST and SOAP services end to end","Build Postman collections and Newman runs","Validate message queues and database state","Participate in sprint ceremonies"],
+  hr:{name:"Nadia Rahman (sample)",email:"hr.sample8@example.com",linkedin:"https://www.linkedin.com/in/sample-hr-8"}}
+];
+
+/* ============ SKILL DICTIONARY + ALIASES ============ */
+const ALIAS = {"selenium webdriver":"selenium","rest-assured":"rest assured","restassured":"rest assured","ci cd":"ci/cd","cicd":"ci/cd","load testing":"performance testing","stress testing":"performance testing","sdlc":"agile","scrum":"agile","bugs":"bug reporting","defect":"bug reporting","defects":"bug reporting","test case":"test cases","js":"javascript","ts":"typescript","mysql":"sql","oracle":"sql","postgres":"sql","postgresql":"sql","functional testing":"manual testing","uat":"manual testing","android testing":"android","ios testing":"ios","git hub":"git","github":"git","gitlab":"git","bitbucket":"git","team lead":"team leadership","leading a team":"team leadership","load runner":"loadrunner","soap ui":"soapui"};
+const SKILLS = [...new Set(JOBS.flatMap(j=>j.skills))];
+let CV = {text:"",skills:[],years:null,file:null,name:""};
+let current = null;
+
+function norm(t){return " "+t.toLowerCase().replace(/[^a-z0-9+#\/.\- ]/g," ")+" ";}
+function extractSkills(text){
+  let t = norm(text);
+  for (const [a,b] of Object.entries(ALIAS)) t = t.split(" "+a+" ").join(" "+b+" ");
+  return SKILLS.filter(s => t.includes(" "+s+" ") || t.includes(" "+s+","));
+}
+function extractYears(text){
+  const m = [...text.toLowerCase().matchAll(/(\d{1,2})(?:\.\d)?\s*\+?\s*(?:years|yrs|year)/g)].map(x=>+x[1]).filter(n=>n<=40);
+  return m.length ? Math.max(...m) : null;
+}
+function matchJob(job){
+  if(!CV.skills.length) return null;
+  const hit = job.skills.filter(s=>CV.skills.includes(s));
+  const miss = job.skills.filter(s=>!CV.skills.includes(s));
+  let skillScore = hit.length / job.skills.length;
+  let expScore = 1;
+  if(CV.years!==null){
+    if(CV.years < job.expMin) expScore = Math.max(0, 1 - (job.expMin-CV.years)*0.25);
+    else if(CV.years > job.expMax+3) expScore = 0.8;
+  }
+  const pct = Math.round((skillScore*0.8 + expScore*0.2)*100);
+  return {pct,hit,miss};
+}
+
+/* ============ CV READING ============ */
+async function readFile(f){
+  const ext = f.name.split(".").pop().toLowerCase();
+  if(ext==="txt") return await f.text();
+  const buf = await f.arrayBuffer();
+  if(ext==="docx") return (await mammoth.extractRawText({arrayBuffer:buf})).value;
+  if(ext==="pdf"){
+    pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    const pdf = await pdfjsLib.getDocument({data:buf}).promise; let out="";
+    for(let i=1;i<=pdf.numPages;i++){const p=await pdf.getPage(i);out+=(await p.getTextContent()).items.map(x=>x.str).join(" ")+"\n";}
+    return out;
+  }
+  throw new Error("Unsupported file type");
+}
+document.getElementById("cvfile").addEventListener("change", async e=>{
+  const f = e.target.files[0]; if(!f) return;
+  try{ CV.file=f; document.getElementById("cvtext").value = await readFile(f); analyseCV(); }
+  catch(err){ toast("Could not read this file. Paste the CV text instead."); }
+});
+function analyseCV(){
+  CV.text = document.getElementById("cvtext").value;
+  if(CV.text.trim().length<30){ toast("Add your CV first (upload or paste)."); return; }
+  CV.skills = extractSkills(CV.text); CV.years = extractYears(CV.text);
+  const r = document.getElementById("cvres");
+  r.innerHTML = CV.skills.length
+   ? `<b>Skills found:</b><br>${CV.skills.map(s=>`<span class="pill">${s}</span>`).join("")}<div class="note" style="margin-top:6px">Experience detected: ${CV.years!==null?CV.years+" yrs":"not found"}</div>`
+   : `<span style="color:var(--bad)">No testing skills detected. Add tools like Selenium, JIRA, Postman or SQL to your CV.</span>`;
+  render(true);
+}
+
+/* ============ LIST / FILTER ============ */
+function daysAgo(d){return Math.floor((Date.now()-new Date(d))/864e5);}
+function ago(d){const n=daysAgo(d);return n===0?"Posted today":n===1?"Posted 1 day ago":`Posted ${n} days ago`;}
+function render(sortByMatch){
+  const q=document.getElementById("q").value.toLowerCase().trim(), city=document.getElementById("city").value;
+  const exp=document.getElementById("expSel").value, types=[...document.querySelectorAll("[name=type]:checked")].map(x=>x.value);
+  const post=document.querySelector("[name=post]:checked").value, only=document.getElementById("onlyMatch").checked;
+  let rows = JOBS.map(j=>({j,m:matchJob(j)})).filter(({j,m})=>{
+    if(q && !(j.title+j.company+j.skills.join(" ")).toLowerCase().includes(q)) return false;
+    if(city && j.city!==city) return false;
+    if(exp!=="" && !(+exp>=j.expMin && +exp<=j.expMax+1)) return false;
+    if(types.length && !types.includes(j.type)) return false;
+    if(post && daysAgo(j.posted)>+post) return false;
+    if(only && (!m || m.pct<50)) return false;
+    return true;
+  });
+  if(CV.skills.length) rows.sort((a,b)=>b.m.pct-a.m.pct); else rows.sort((a,b)=>new Date(b.j.posted)-new Date(a.j.posted));
+  document.getElementById("count").textContent = `${rows.length} Software Tester job${rows.length!==1?"s":""} in UAE`+(CV.skills.length?" – sorted by CV match":"");
+  document.getElementById("list").innerHTML = rows.length ? rows.map(({j,m})=>`
+   <article class="card job ${current===j.id?"sel":""}" onclick="showJob(${j.id})">
+    <div class="row"><div><h2>${j.title}</h2><div class="co">${j.company}</div></div>
+    ${m?`<span class="score ${m.pct>=70?"s-hi":m.pct>=40?"s-mid":"s-lo"}">${m.pct}% match</span>`:""}</div>
+    <div class="meta"><span>💼 ${j.expMin}–${j.expMax} Yrs</span><span>💰 ${j.salary}</span><span>📍 ${j.city}, UAE</span></div>
+    <div class="tags">${j.skills.map(s=>`<span class="tag ${m?(m.hit.includes(s)?"hit":"miss"):""}">${s}</span>`).join("")}</div>
+    <div class="posted">${ago(j.posted)}</div></article>`).join("")
+   : `<div class="card">No jobs match these filters. Clear a filter or search a broader keyword.</div>`;
+}
+
+/* ============ DETAIL ============ */
+function showJob(id){
+  current=id; const j=JOBS.find(x=>x.id===id), m=matchJob(j);
+  document.getElementById("detail").innerHTML = `
+   <h2>${j.title}</h2><div class="co">${j.company} · ${j.city}, UAE</div>
+   <div class="meta"><span>💼 ${j.expMin}–${j.expMax} Yrs</span><span>${ago(j.posted)}</span></div>
+   <div style="margin-top:6px">💰 ${j.salary}</div>
+   ${m?`<p><span class="score ${m.pct>=70?"s-hi":m.pct>=40?"s-mid":"s-lo"}">${m.pct}% match</span>${m.miss.length?`<br><span class="note">Missing from your CV: ${m.miss.join(", ")}</span>`:""}</p>`:""}
+   <h4>Job description</h4><ul>${j.desc.map(d=>`<li>${d}</li>`).join("")}</ul>
+   <h4>Key skills</h4><div class="tags">${j.skills.map(s=>`<span class="tag">${s}</span>`).join("")}</div>
+   <div class="hr"><b>Recruiter</b><br>${j.hr.name}<br>
+    ✉️ <a href="mailto:${j.hr.email}">${j.hr.email}</a><br>
+    🔗 <a href="${j.hr.linkedin}" target="_blank" rel="noopener">LinkedIn profile</a></div>
+   <button class="btn" style="width:100%;margin-top:14px" onclick="openModal(${j.id})">Apply &amp; send CV to HR</button>`;
+  render();
+}
+
+/* ============ APPLY / SEND CV ============ */
+function openModal(id){
+  const j=JOBS.find(x=>x.id===id); current=id;
+  if(!CV.file && CV.text.trim().length<30){ toast("Upload or paste your CV first."); document.getElementById("cvbox").scrollIntoView({behavior:"smooth"}); return; }
+  document.getElementById("apTitle").textContent="Apply: "+j.title;
+  document.getElementById("apTo").textContent=`To: ${j.hr.name} <${j.hr.email}>`;
+  document.getElementById("apMsg").value=`Dear ${j.hr.name.replace(/ \(sample\)/,"")},\n\nI would like to apply for the ${j.title} position at ${j.company}. Please find my CV attached.\n\nKind regards,`;
+  document.getElementById("apCv").textContent = CV.file ? "Attached CV: "+CV.file.name : "No file uploaded – your pasted CV text will be included in the message.";
+  document.getElementById("apHint").textContent = FORM_ENDPOINT ? "Your CV will be delivered to HR directly." : "This opens your email app with the message ready. Attach your CV file there before sending.";
+  document.getElementById("applyModal").classList.add("on");
+}
+function closeModal(){document.getElementById("applyModal").classList.remove("on");}
+async function sendCV(){
+  const j=JOBS.find(x=>x.id===current), name=document.getElementById("apName").value.trim(), email=document.getElementById("apEmail").value.trim(), msg=document.getElementById("apMsg").value;
+  if(!name||!/\S+@\S+\.\S+/.test(email)){toast("Enter your name and a valid email.");return;}
+  const subject=`Application: ${j.title} – ${name}`;
+  if(FORM_ENDPOINT){
+    const fd=new FormData(); fd.append("access_key",WEB3FORMS_KEY); fd.append("subject",subject); fd.append("name",name); fd.append("email",email);
+    fd.append("hr_email",j.hr.email); fd.append("job",j.title+" – "+j.company); fd.append("message",msg+"\n\n"+(CV.file?"":CV.text));
+    if(CV.file) fd.append("attachment",CV.file);
+    try{ const r=await fetch(FORM_ENDPOINT,{method:"POST",body:fd,headers:{Accept:"application/json"}}); if(!r.ok) throw 0; toast("CV sent to HR."); closeModal(); }
+    catch(e){ toast("Sending failed. Try again or email HR directly."); }
+    return;
+  }
+  const body = msg+`\n\nName: ${name}\nEmail: ${email}`+(CV.file?"\n\n(Please attach your CV: "+CV.file.name+")":"\n\n--- CV ---\n"+CV.text.slice(0,1500));
+  location.href=`mailto:${j.hr.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  closeModal();
+}
+function toast(t){const e=document.getElementById("toast");e.textContent=t;e.style.display="block";setTimeout(()=>e.style.display="none",3200);}
+render();
+</script>
+</body>
+</html>
