@@ -35,10 +35,30 @@
       : `${job.expMin}–${job.expMax} years`;
   }
 
+  function keywordMatches(job, query) {
+    const keyword = query.trim().toLowerCase();
+    if (!keyword) return true;
+    const searchable = `${job.title} ${job.company} ${job.type} ${job.level || ""} ${job.city} ${job.description} ${(job.skills || []).join(" ")}`.toLowerCase();
+    if (searchable.includes(keyword)) return true;
+    const tokens = keyword.split(/\s+/).filter(Boolean);
+    const matches = tokens.filter((token) => searchable.includes(token)).length;
+    return matches >= Math.ceil(tokens.length * 0.6);
+  }
+
+  function experienceMatches(job, selected) {
+    if (selected === "") return true;
+    const years = Number(selected);
+    if (job.experienceSpecified === false) {
+      return years === 0 && /\b(fresher|entry[ -]?level|junior|graduate|intern|trainee)\b/i.test(`${job.title} ${job.level || ""}`);
+    }
+    if (years === 0) return job.expMin <= 0 && job.expMax <= 1;
+    return years >= job.expMin && years <= job.expMax + 1;
+  }
+
   function match(job) {
     const skills = Array.isArray(profile.skills) ? profile.skills : [];
     if (!skills.length) return null;
-    const hits = job.skills.filter((skill) => skills.includes(skill));
+    const hits = (job.skills || []).filter((skill) => skills.includes(skill));
     const years = profile.experienceYears === null || profile.experienceYears === undefined || profile.experienceYears === ""
       ? Number.NaN
       : Number(profile.experienceYears);
@@ -52,17 +72,15 @@
 
   function filteredJobs() {
     const keyword = document.getElementById("keyword").value.trim().toLowerCase();
-    const city = document.getElementById("city").value.trim().toLowerCase();
+    const city = document.getElementById("city").value.trim();
     const experience = document.getElementById("experience").value;
     const category = document.getElementById("category").value;
     const posted = document.querySelector("[name=posted]:checked").value;
 
     return jobs.filter((job) => {
-      const searchable = `${job.title} ${job.company} ${job.type} ${job.city} ${job.description} ${job.skills.join(" ")}`.toLowerCase();
-      if (keyword && !searchable.includes(keyword)) return false;
-      if (city && !job.city.toLowerCase().includes(city)) return false;
-      if (experience !== "" && job.experienceSpecified !== false &&
-          !(Number(experience) >= job.expMin && Number(experience) <= job.expMax + 1)) return false;
+      if (!keywordMatches(job, keyword)) return false;
+      if (city && !window.TestoraJobSources.matchesLocation(job, city)) return false;
+      if (!experienceMatches(job, experience)) return false;
       if (category && job.type !== category) return false;
       const age = daysAgo(job.posted);
       if (posted && (age === null || age > Number(posted))) return false;
@@ -91,7 +109,7 @@
       <h4>Skills</h4>
       <div class="tags">${job.skills.map((skill) => `<span class="tag">${escapeHtml(skill)}</span>`).join("")}</div>
       <button class="btn" id="startApplication" type="button" style="width:100%;margin-top:16px">Save application (CV optional)</button>
-      ${applyUrl ? `<a class="btn secondary" href="${escapeHtml(applyUrl)}" target="_blank" rel="noopener noreferrer" style="width:100%;margin-top:8px">${job.sourceName === "Arbeitnow" ? "View original listing on Arbeitnow" : "Continue to employer website"}</a>` : '<p class="note">Employer application link unavailable. Saving here does not notify the employer.</p>'}
+      ${applyUrl ? `<a class="btn secondary" href="${escapeHtml(applyUrl)}" target="_blank" rel="noopener noreferrer" style="width:100%;margin-top:8px">${job.sourceName && job.sourceName !== "Configured job feeds" ? `View original listing on ${escapeHtml(job.sourceName)}` : "Continue to employer website"}</a>` : '<p class="note">Employer application link unavailable. Saving here does not notify the employer.</p>'}
     `;
     document.getElementById("startApplication").addEventListener("click", () => openApplication(job));
   }
@@ -131,13 +149,20 @@
     if (values.includes(selected)) category.value = selected;
   }
 
-  async function refreshJobs() {
+  function sourceFilters() {
+    return {
+      keyword: document.getElementById("keyword").value.trim(),
+      location: document.getElementById("city").value.trim()
+    };
+  }
+
+  async function refreshJobs(filters) {
     if (refreshing) return;
     refreshing = true;
     refreshButton.disabled = true;
     refreshButton.textContent = "Refreshing…";
     try {
-      const loaded = await window.TestoraJobsApi.loadJobs(document.getElementById("catalogStatus"));
+      const loaded = await window.TestoraJobsApi.loadJobs(document.getElementById("catalogStatus"), filters || sourceFilters());
       jobs = loaded.map((job) => ({ ...job, isDemo: String(job.id).startsWith("demo-") }));
       renderCategories();
       render();
@@ -203,6 +228,7 @@
   document.getElementById("searchForm").addEventListener("submit", (event) => {
     event.preventDefault();
     render();
+    refreshJobs(sourceFilters());
   });
   document.getElementById("applyFilters").addEventListener("click", render);
   document.getElementById("category").addEventListener("change", render);

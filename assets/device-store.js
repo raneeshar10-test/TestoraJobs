@@ -1,6 +1,6 @@
 (() => {
   const databaseName = "testora-device-data";
-  const databaseVersion = 1;
+  const databaseVersion = 2;
   let opening;
 
   function openDatabase() {
@@ -12,6 +12,7 @@
         if (!database.objectStoreNames.contains("jobs")) database.createObjectStore("jobs", { keyPath: "id" });
         if (!database.objectStoreNames.contains("resumes")) database.createObjectStore("resumes", { keyPath: "id" });
         if (!database.objectStoreNames.contains("applications")) database.createObjectStore("applications", { keyPath: "id" });
+        if (!database.objectStoreNames.contains("sourceSync")) database.createObjectStore("sourceSync", { keyPath: "id" });
       };
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => {
@@ -76,6 +77,14 @@
     return (await requestResult("jobs", (store) => store.getAll())) || [];
   }
 
+  async function getSourceState(id) {
+    return requestResult("sourceSync", (store) => store.get(id));
+  }
+
+  async function saveSourceState(state) {
+    return transact("sourceSync", "readwrite", (store) => { store.put(state); });
+  }
+
   async function saveResume(file) {
     return transact("resumes", "readwrite", (store) => {
       store.put({ id: "profile", name: file.name, type: file.type, savedAt: new Date().toISOString(), blob: file });
@@ -106,8 +115,9 @@
   async function clearAll() {
     const database = await openDatabase();
     return new Promise((resolve, reject) => {
-      const transaction = database.transaction(["jobs", "resumes", "applications"], "readwrite");
-      ["jobs", "resumes", "applications"].forEach((name) => transaction.objectStore(name).clear());
+      const stores = ["jobs", "resumes", "applications", "sourceSync"];
+      const transaction = database.transaction(stores, "readwrite");
+      stores.forEach((name) => transaction.objectStore(name).clear());
       transaction.oncomplete = () => {
         database.close();
         opening = null;
@@ -139,6 +149,8 @@
   window.TestoraDeviceStore = {
     saveJobs,
     getJobs,
+    getSourceState,
+    saveSourceState,
     saveResume,
     getResume,
     deleteResume,

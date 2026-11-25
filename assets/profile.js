@@ -154,8 +154,9 @@
     }
     const matches = jobs.filter((job) =>
       job.skills.every((skill) => profile.skills.includes(skill)) &&
+      job.experienceSpecified !== false &&
       years >= job.expMin && years <= job.expMax &&
-      (!profile.preferredCity || job.city.toLowerCase().includes(profile.preferredCity.toLowerCase()))
+      (!profile.preferredCity || window.TestoraJobSources.matchesLocation(job, profile.preferredCity))
     );
     if (!matches.length) {
       host.textContent = "No exact matches for all listed skills, experience, and location.";
@@ -182,9 +183,9 @@
     }
     const years = currentYears();
     const matches = jobs.filter((job) => {
-      const overlap = years === null || (years >= job.expMin - 1 && years <= job.expMax + 1);
+      const overlap = years === null || (job.experienceSpecified !== false && years >= job.expMin - 1 && years <= job.expMax + 1);
       const sharedSkills = job.skills.filter((skill) => profile.skills.includes(skill)).length;
-      return overlap && sharedSkills > 0 && (!profile.preferredCity || job.city.toLowerCase().includes(profile.preferredCity.toLowerCase()));
+      return overlap && sharedSkills > 0 && (!profile.preferredCity || window.TestoraJobSources.matchesLocation(job, profile.preferredCity));
     });
     host.textContent = matches.length
       ? `Demo email preview for ${profile.email}: ${matches.map((job) => job.title).join(", ")}. No email was sent.`
@@ -317,7 +318,10 @@
     button.disabled = true;
     button.textContent = "Refreshing jobs…";
     try {
-      const latestJobs = await window.TestoraJobsApi.loadJobs($("catalogStatus"));
+      const latestJobs = await window.TestoraJobsApi.loadJobs($("catalogStatus"), {
+        keyword: profile.skills[0] || "",
+        location: profile.preferredCity || ""
+      });
       jobs.splice(0, jobs.length, ...latestJobs);
       renderRecommendations();
       renderAlertPreview();
