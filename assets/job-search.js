@@ -21,6 +21,12 @@
     return Number.isFinite(time) ? Math.max(0, Math.floor((Date.now() - time) / 86400000)) : null;
   }
 
+  function postedWithinDays(value, days) {
+    const time = new Date(value).getTime();
+    const elapsed = Date.now() - time;
+    return Number.isFinite(time) && elapsed >= 0 && elapsed <= Number(days) * 86400000;
+  }
+
   function postedLabel(value) {
     const days = daysAgo(value);
     if (days === null) return "Posting date unavailable";
@@ -82,8 +88,7 @@
       if (city && !window.TestoraJobSources.matchesLocation(job, city)) return false;
       if (!experienceMatches(job, experience)) return false;
       if (category && job.type !== category) return false;
-      const age = daysAgo(job.posted);
-      if (posted && (age === null || age > Number(posted))) return false;
+      if (posted && !postedWithinDays(job.posted, posted)) return false;
       return true;
     }).sort((a, b) => {
       const aMatch = match(a);
@@ -125,7 +130,9 @@
 
   function render() {
     const rows = filteredJobs();
-    count.textContent = `${rows.length} job${rows.length === 1 ? "" : "s"} found`;
+    count.textContent = rows.length === jobs.length
+      ? `${rows.length} job${rows.length === 1 ? "" : "s"} found`
+      : `${rows.length} of ${jobs.length} loaded listings match`;
     list.innerHTML = rows.length ? rows.map((job) => {
       const score = match(job);
       return `
@@ -135,9 +142,21 @@
           <div class="tags">${job.skills.slice(0, 5).map((skill) => `<span class="tag">${escapeHtml(skill)}</span>`).join("")}</div>
           <div class="posted">${escapeHtml(postedLabel(job.posted))}${job.isDemo ? " · Sample listing" : job.sourceName ? ` · Source: ${escapeHtml(job.sourceName)}` : ""}</div>
         </article>`;
-    }).join("") : '<div class="card">No jobs match these filters. Try another location, keyword, or date range.</div>';
+    }).join("") : jobs.length
+      ? `<div class="card"><p>No listings match your current filters. ${jobs.length} listings are loaded, but none match this combination.</p><button class="btn secondary small" type="button" data-clear-filters>Clear filters and show all ${jobs.length} listings</button></div>`
+      : '<div class="card">No job listings are currently available.</div>';
     if (selectedId && !rows.some((job) => job.id === selectedId)) selectedId = "";
     renderDetail(rows.find((job) => job.id === selectedId));
+  }
+
+  function clearFilters() {
+    document.getElementById("keyword").value = "";
+    document.getElementById("city").value = "";
+    document.getElementById("experience").value = "";
+    document.getElementById("category").value = "";
+    document.querySelector("[name=posted][value='']").checked = true;
+    selectedId = "";
+    render();
   }
 
   function renderCategories() {
@@ -212,6 +231,10 @@
   }
 
   list.addEventListener("click", (event) => {
+    if (event.target.closest("[data-clear-filters]")) {
+      clearFilters();
+      return;
+    }
     const card = event.target.closest("[data-job-id]");
     if (!card) return;
     selectedId = card.dataset.jobId;

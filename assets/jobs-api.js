@@ -72,8 +72,8 @@
   function demoOrCache(statusElement, reason, cachedJobs, cacheWarning) {
     const jobs = cachedJobs.length ? cachedJobs : window.DEMO_JOBS;
     const description = cachedJobs.length
-      ? `${reason} Showing ${cachedJobs.length} listings cached on this device.`
-      : `${reason} Sample listings are shown.`;
+      ? `${reason} Loaded ${cachedJobs.length} listings cached on this device. The result count below reflects your filters.`
+      : `${reason} Sample listings are shown. The result count below reflects your filters.`;
     setStatus(statusElement, `${description}${cacheWarning ? ` ${cacheWarning}` : ""}`, true);
     return jobs;
   }
@@ -130,11 +130,11 @@
       let status;
       if (jobs.length) {
         status = result.loadedSources.length
-          ? `Showing ${jobs.length} listings from ${result.loadedSources.join(", ")}. Listings link to their original sources.`
-          : `Showing ${jobs.length} cached listings from this device.`;
+          ? `Loaded ${jobs.length} listings from ${result.loadedSources.join(", ")}. The result count below reflects your filters; listings link to their original sources.`
+          : `Loaded ${jobs.length} cached listings from this device. The result count below reflects your filters.`;
       } else if (cachedJobs.length) {
         jobs = cachedJobs;
-        status = `No live listings are currently available. Showing ${jobs.length} listings cached on this device.`;
+        status = `No live listings are currently available. Loaded ${jobs.length} listings cached on this device. The result count below reflects your filters.`;
       } else {
         const failures = [...warnings, ...result.warnings].join(" ");
         return demoOrCache(
@@ -174,8 +174,8 @@
           const result = await fetchSupabaseJobs();
           if (result.jobs.length) {
             const message = result.truncated
-              ? "Showing the first 10,000 live jobs. Narrow the date range or search filters."
-              : `Showing ${result.jobs.length} live job${result.jobs.length === 1 ? "" : "s"} from configured feeds.`;
+              ? "Loaded the first 10,000 live jobs. The result count below reflects your filters."
+              : `Loaded ${result.jobs.length} live job${result.jobs.length === 1 ? "" : "s"} from configured feeds. The result count below reflects your filters.`;
             setStatus(statusElement, message, false);
             return cacheJobs(result.jobs, statusElement);
           }
