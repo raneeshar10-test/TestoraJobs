@@ -1,0 +1,4 @@
+project_id = "testora-jobs"
+
+[functions.import-jobs]
+verify_jwt = false

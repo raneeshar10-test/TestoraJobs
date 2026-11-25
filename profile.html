@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Manage your job seeker profile, CV, preferences, and alerts.">
+  <title>My profile | Testora Jobs</title>
+  <link rel="stylesheet" href="assets/site.css">
+  <script defer src="assets/jobs-data.js"></script>
+  <script defer src="assets/supabase-config.js"></script>
+  <script defer src="assets/profile-store.js"></script>
+  <script defer src="assets/device-store.js"></script>
+  <script defer src="assets/jobs-api.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script defer src="assets/profile.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">Testora<b>Jobs</b></a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="index.html">Search jobs</a>
+      <a class="active" href="profile.html" aria-current="page">My profile</a>
+    </nav>
+  </header>
+
+  <main class="profile-shell">
+    <p class="feed-status" id="catalogStatus" role="status">Loading jobs for your recommendations…</p>
+    <div class="profile-grid">
+      <form class="card profile-form" id="profileForm">
+        <h1>My job seeker profile</h1>
+        <p class="note">Your profile and CV are saved in this browser's storage on this device. They are not uploaded to our job-feed service. This demo does not create an account or sync data across devices.</p>
+
+        <hr class="divider">
+        <h2>Contact details</h2>
+        <label class="field-label" for="candidateName">Full name</label>
+        <input class="field" id="candidateName" autocomplete="name" placeholder="Your name">
+
+        <label class="field-label" for="candidateEmail">Email address</label>
+        <div class="field-row">
+          <input class="field" id="candidateEmail" type="email" autocomplete="email" placeholder="you@example.com">
+          <button class="btn secondary small" type="button" data-send-otp="email">Send code</button>
+        </div>
+        <div class="field-row">
+          <input class="field" id="emailOtp" inputmode="numeric" maxlength="6" placeholder="6-digit email code" aria-label="Email verification code">
+          <button class="btn secondary small" type="button" data-verify-otp="email">Verify</button>
+        </div>
+        <p class="note status" id="emailStatus">Email not verified</p>
+
+        <label class="field-label" for="candidatePhone">Phone number</label>
+        <div class="field-row">
+          <input class="field" id="candidatePhone" type="tel" autocomplete="tel" placeholder="+971 50 123 4567">
+          <button class="btn secondary small" type="button" data-send-otp="phone">Send code</button>
+        </div>
+        <div class="field-row">
+          <input class="field" id="phoneOtp" inputmode="numeric" maxlength="6" placeholder="6-digit SMS code" aria-label="Phone verification code">
+          <button class="btn secondary small" type="button" data-verify-otp="phone">Verify</button>
+        </div>
+        <p class="note status" id="phoneStatus">Phone not verified</p>
+        <p class="note">Demo OTP is shown on screen; no email or SMS is sent.</p>
+
+        <hr class="divider">
+        <h2>CV and preferences</h2>
+        <label class="upload-box" for="cvFile">Upload PDF, DOCX, or TXT (saved on this device)
+          <input id="cvFile" type="file" accept=".pdf,.docx,.txt" style="display:block;margin-top:8px;max-width:100%">
+        </label>
+        <p class="note" id="savedResumeStatus">No CV saved on this device.</p>
+        <button class="btn secondary small" id="removeResume" type="button" hidden>Remove saved CV</button>
+        <label class="field-label" for="cvText">Or paste CV text (saved locally when analyzed)</label>
+        <textarea id="cvText" placeholder="Paste your CV text here"></textarea>
+        <div id="cvStatus" class="note" role="status"></div>
+        <button class="btn" id="analyzeCv" type="button">Analyze CV</button>
+
+        <label class="field-label" for="preferredCity">Preferred location</label>
+        <input class="field" id="preferredCity" placeholder="Any location, or e.g. Dubai / Remote">
+        <label class="field-label" for="experienceYears">Years of experience (optional override)</label>
+        <input class="field" id="experienceYears" type="number" min="0" max="40" step="0.5" placeholder="Detected from CV when blank">
+        <p class="note" id="skillsFound">CV skills have not been analyzed.</p>
+
+        <hr class="divider">
+        <h2>Job alerts</h2>
+        <label><input id="alertsEnabled" type="checkbox"> Enable similar-job alerts</label>
+        <p class="note" id="alertStatus">Disabled. Email delivery is not configured in this demo.</p>
+        <button class="btn secondary small" id="previewAlerts" type="button">Preview similar jobs</button>
+        <div class="alert-preview note" id="alertPreview" aria-live="polite">No alert email will be sent from this demo.</div>
+        <button class="btn" id="saveProfile" type="button" style="margin-top:16px">Save profile on this device</button>
+        <p class="note status" id="profileStatus" aria-live="polite"></p>
+
+        <hr class="divider">
+        <h2>Applications saved on this device</h2>
+        <p class="note">These are local application records only. Employers are not notified unless you continue through an employer application link.</p>
+        <div id="applicationList" aria-live="polite">Loading saved applications…</div>
+
+        <hr class="divider">
+        <h2>Device storage</h2>
+        <p class="note" id="storageStatus" role="status">Checking browser storage…</p>
+        <div class="field-row">
+          <button class="btn secondary small" id="keepData" type="button">Keep data on this device</button>
+          <button class="btn secondary small" id="clearData" type="button">Delete my local data</button>
+        </div>
+      </form>
+
+      <aside class="card">
+        <h2 class="section-title">Exact job matches</h2>
+        <p class="note">Recommendations require every listed skill plus matching experience and preferred location.</p>
+        <div id="recommendations" aria-live="polite">Analyze your CV to see exact matches.</div>
+        <button class="btn secondary" id="refreshRecommendations" type="button" style="width:100%;margin-top:8px">Refresh job matches</button>
+        <a class="btn secondary" href="index.html" style="width:100%;margin-top:16px">Go to job search</a>
+      </aside>
+    </div>
+  </main>
+  <div class="toast" id="toast" role="status"></div>
+</body>
+</html>
