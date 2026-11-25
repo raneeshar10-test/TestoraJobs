@@ -4,13 +4,13 @@ The site now has separate Search Jobs and My Profile pages, broad job-title/loca
 
 OTP verification and email-alert previews remain simulated; this setup does not send candidate emails or SMS. Saving an application stores a local record only and does not notify the employer. If a listing has an employer application link, the user must continue there to submit.
 
-The importer runs once per day at **12:00 AM IST** (18:30 UTC). It imports only feeds you are authorized to use. It cannot crawl every job site, and no feed is configured in this repository.
+The Supabase importer runs once per day at **12:00 AM IST** (18:30 UTC). It imports only feeds you are authorized to use. It cannot crawl every job site, and no Supabase feed is configured in this repository.
 
-The Search Jobs page fetches active listings from Supabase when opened, offers a manual refresh, and checks again every five minutes while the page is open. My Profile has a refresh control for recommendations. Live data requires a Supabase URL, publishable key, and at least one enabled/imported source; the placeholders in `assets/supabase-config.js` are intentionally blank.
+The Search Jobs page loads live listings from Arbeitnow's free public API by default (up to 300 current European listings), provides a manual refresh, and checks hourly while open. Each listing links back to its source. Arbeitnow's API is updated hourly; see its [API details](https://www.arbeitnow.com/blog/job-board-api) and [terms](https://www.arbeitnow.com/terms). My Profile has a refresh control for recommendations. When configured, Supabase jobs take priority; if Supabase has no active jobs or cannot be reached, the public API is used instead. The Supabase placeholders in `assets/supabase-config.js` remain blank, so no project credentials are required to see the public feed.
 
 ## Run the pages locally
 
-Open the repository in VS Code and start a local static web server (for example, the Live Server extension). Open the served `index.html` page rather than using `file://` so both pages share the same browser origin and on-device storage. A small multi-industry sample catalog remains visible until a Supabase project and authorized job feeds are configured.
+Open the repository in VS Code and start a local static web server (for example, the Live Server extension). Open the served `index.html` page rather than using `file://` so both pages share the same browser origin and on-device storage. If the public feed is unavailable, the site falls back to its sample catalog. The public feed mainly covers Europe; connect additional authorized sources through Supabase for other regions.
 
 ## Configure the Supabase project
 
@@ -84,7 +84,7 @@ Open the repository in VS Code and start a local static web server (for example,
    supabase functions deploy import-jobs
    ```
 
-7. Add the project URL and **publishable** key (not the secret key) to `assets/supabase-config.js` so the browser can read active jobs. Active listings are cached in IndexedDB on the device. If a live query fails, the site shows an error and uses cached listings where available, then sample listings.
+7. Add the project URL and **publishable** key (not the secret key) to `assets/supabase-config.js` so the browser can read active jobs. Active listings are cached in IndexedDB on the device. If the Supabase query fails or returns no active jobs, the site tries the public Arbeitnow feed; if that is unavailable too, it uses cached listings where available, then sample listings.
 
 ## Check the schedule and import results
 

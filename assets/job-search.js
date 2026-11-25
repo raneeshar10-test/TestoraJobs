@@ -29,6 +29,12 @@
     return `Posted ${days} days ago`;
   }
 
+  function experienceLabel(job) {
+    return job.experienceSpecified === false
+      ? "Experience not specified"
+      : `${job.expMin}–${job.expMax} years`;
+  }
+
   function match(job) {
     const skills = Array.isArray(profile.skills) ? profile.skills : [];
     if (!skills.length) return null;
@@ -55,7 +61,8 @@
       const searchable = `${job.title} ${job.company} ${job.type} ${job.city} ${job.description} ${job.skills.join(" ")}`.toLowerCase();
       if (keyword && !searchable.includes(keyword)) return false;
       if (city && !job.city.toLowerCase().includes(city)) return false;
-      if (experience !== "" && !(Number(experience) >= job.expMin && Number(experience) <= job.expMax + 1)) return false;
+      if (experience !== "" && job.experienceSpecified !== false &&
+          !(Number(experience) >= job.expMin && Number(experience) <= job.expMax + 1)) return false;
       if (category && job.type !== category) return false;
       const age = daysAgo(job.posted);
       if (posted && (age === null || age > Number(posted))) return false;
@@ -77,14 +84,14 @@
     detail.innerHTML = `
       <h2>${escapeHtml(job.title)}</h2>
       <p class="company">${escapeHtml(job.company)} · ${escapeHtml(job.city)}</p>
-      <div class="meta"><span>${escapeHtml(job.expMin)}–${escapeHtml(job.expMax)} years</span><span>${escapeHtml(job.salary)}</span></div>
+      <div class="meta"><span>${escapeHtml(experienceLabel(job))}</span><span>${escapeHtml(job.salary)}</span></div>
       ${match(job) === null ? "" : `<p><span class="match">${match(job)}% profile match</span></p>`}
       <h4>About the role</h4>
       <p>${escapeHtml(description)}</p>
       <h4>Skills</h4>
       <div class="tags">${job.skills.map((skill) => `<span class="tag">${escapeHtml(skill)}</span>`).join("")}</div>
       <button class="btn" id="startApplication" type="button" style="width:100%;margin-top:16px">Save application (CV optional)</button>
-      ${applyUrl ? `<a class="btn secondary" href="${escapeHtml(applyUrl)}" target="_blank" rel="noopener noreferrer" style="width:100%;margin-top:8px">Continue to employer website</a>` : '<p class="note">Employer application link unavailable. Saving here does not notify the employer.</p>'}
+      ${applyUrl ? `<a class="btn secondary" href="${escapeHtml(applyUrl)}" target="_blank" rel="noopener noreferrer" style="width:100%;margin-top:8px">${job.sourceName === "Arbeitnow" ? "View original listing on Arbeitnow" : "Continue to employer website"}</a>` : '<p class="note">Employer application link unavailable. Saving here does not notify the employer.</p>'}
     `;
     document.getElementById("startApplication").addEventListener("click", () => openApplication(job));
   }
@@ -106,9 +113,9 @@
       return `
         <article class="card job-card${selectedId === job.id ? " selected" : ""}" data-job-id="${escapeHtml(job.id)}" tabindex="0" role="button" aria-label="View ${escapeHtml(job.title)}">
           <div class="row"><div><h3>${escapeHtml(job.title)}</h3><div class="company">${escapeHtml(job.company)}</div></div>${score === null ? "" : `<span class="match">${score}% match</span>`}</div>
-          <div class="meta"><span>${escapeHtml(job.city)}</span><span>${escapeHtml(job.expMin)}–${escapeHtml(job.expMax)} years</span><span>${escapeHtml(job.salary)}</span></div>
+          <div class="meta"><span>${escapeHtml(job.city)}</span><span>${escapeHtml(experienceLabel(job))}</span><span>${escapeHtml(job.salary)}</span></div>
           <div class="tags">${job.skills.slice(0, 5).map((skill) => `<span class="tag">${escapeHtml(skill)}</span>`).join("")}</div>
-          <div class="posted">${escapeHtml(postedLabel(job.posted))}${job.isDemo ? " · Sample listing" : ""}</div>
+          <div class="posted">${escapeHtml(postedLabel(job.posted))}${job.isDemo ? " · Sample listing" : job.sourceName ? ` · Source: ${escapeHtml(job.sourceName)}` : ""}</div>
         </article>`;
     }).join("") : '<div class="card">No jobs match these filters. Try another location, keyword, or date range.</div>';
     if (selectedId && !rows.some((job) => job.id === selectedId)) selectedId = "";
@@ -282,7 +289,7 @@
       status.textContent += ` Profile session data could not be read: ${stored.error}`;
       status.dataset.state = "error";
     }
-    if (window.TestoraJobsApi.isConfigured()) window.setInterval(refreshJobs, 5 * 60 * 1000);
+    window.setInterval(refreshJobs, 60 * 60 * 1000);
   }
 
   start();
