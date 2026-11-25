@@ -3,66 +3,77 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TestHire UAE – Software Tester Jobs in UAE</title>
+<title>Testora Jobs – Software Testing Jobs in the UAE</title>
 <style>
-:root{--blue:#275df5;--navy:#0f1d40;--bg:#f4f7fc;--line:#e1e7f2;--mut:#6b7691;--ok:#12a26b;--warn:#e08a00;--bad:#d9433f}
-*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--navy);font-size:14px}
-header{background:#fff;border-bottom:1px solid var(--line);padding:12px 5vw;display:flex;align-items:center;gap:24px;position:sticky;top:0;z-index:5}
-.logo{font-size:24px;font-weight:800;color:var(--navy)}.logo b{color:var(--blue)}
-header nav{margin-left:auto;display:flex;gap:10px}
-button{font:inherit;cursor:pointer}.btn{background:var(--blue);color:#fff;border:0;border-radius:22px;padding:9px 20px;font-weight:600}
-.btn.ghost{background:#fff;color:var(--blue);border:1.5px solid var(--blue)}.btn.sm{padding:6px 14px;font-size:13px}
+:root{--blue:#315eea;--navy:#12234b;--bg:#f5f7fb;--line:#e4e9f2;--mut:#69758e;--ok:#14845e;--warn:#a96100;--bad:#c33f45;--shadow:0 8px 26px rgba(25,45,91,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--navy);font-size:14px;line-height:1.5}
+header{background:#fff;border-bottom:1px solid var(--line);padding:0 max(5vw,calc((100vw - 1200px)/2));height:72px;display:flex;align-items:center;gap:32px;position:sticky;top:0;z-index:5}
+.logo{font-size:23px;font-weight:800;color:var(--navy);letter-spacing:-.8px;white-space:nowrap}.logo b{color:var(--blue)}
+header nav{margin-left:auto;display:flex;align-items:center;gap:26px}header nav a{color:var(--navy);text-decoration:none;font-weight:600}header nav a:hover{color:var(--blue)}
+button{font:inherit;cursor:pointer}.btn{background:var(--blue);color:#fff;border:0;border-radius:9px;padding:11px 20px;font-weight:700;transition:background .15s,transform .15s}
+.btn:hover{background:#244bc5;transform:translateY(-1px)}.btn.ghost{background:#fff;color:var(--blue);border:1px solid #cbd6f5}.btn.ghost:hover{background:#f3f6ff}.btn.sm{padding:8px 15px;font-size:13px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.hero{background:linear-gradient(180deg,#e9f0ff,var(--bg));padding:36px 5vw 28px;text-align:center}
-.hero h1{margin:0 0 6px;font-size:30px}.hero p{margin:0 0 20px;color:var(--mut)}
-.search{max-width:900px;margin:auto;background:#fff;border-radius:40px;box-shadow:0 4px 18px rgba(39,93,245,.15);display:flex;padding:6px;gap:4px;flex-wrap:wrap}
-.search input,.search select{flex:1;min-width:150px;border:0;outline:0;padding:12px 18px;font:inherit;background:transparent;border-right:1px solid var(--line)}
-.search .btn{border-radius:30px;padding:12px 32px}
-.wrap{max-width:1200px;margin:0 auto;padding:20px 5vw;display:grid;grid-template-columns:240px 1fr 300px;gap:18px}
-@media(max-width:1000px){.wrap{grid-template-columns:1fr}}
-.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
-.filters h3{margin:0 0 10px;font-size:15px}.filters label{display:flex;gap:8px;padding:4px 0;cursor:pointer}
-.filters hr{border:0;border-top:1px solid var(--line);margin:12px 0}
-.job{margin-bottom:12px;cursor:pointer;transition:box-shadow .15s}.job:hover{box-shadow:0 4px 16px rgba(15,29,64,.1)}
-.job.sel{border-color:var(--blue)}.job h2{margin:0;font-size:17px;color:var(--navy)}.job:hover h2{color:var(--blue)}
-.co{color:var(--mut);margin:2px 0 8px}.meta{display:flex;flex-wrap:wrap;gap:14px;color:var(--mut);font-size:13px}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.tag{background:#eef2fb;border-radius:14px;padding:3px 10px;font-size:12px}
-.tag.hit{background:#dff6ec;color:#0c7a50}.tag.miss{background:#fdeceb;color:var(--bad)}
+.hero{background:radial-gradient(ellipse at 82% 5%,rgba(108,150,255,.26),transparent 38%),linear-gradient(115deg,#10234c,#183a7d 65%,#2453ad);padding:54px 5vw 48px;text-align:center;color:#fff}
+.hero-inner{max-width:930px;margin:auto}.eyebrow{display:inline-block;color:#d4e0ff;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.7px;margin-bottom:12px}
+.hero h1{margin:0 auto 10px;font-size:clamp(32px,4vw,48px);line-height:1.12;letter-spacing:-1.6px;max-width:760px}.hero p{margin:0 0 28px;color:#d4def2;font-size:16px}
+.search{max-width:960px;margin:auto;background:#fff;border:1px solid rgba(255,255,255,.5);border-radius:14px;box-shadow:0 14px 36px rgba(4,17,51,.24);display:flex;padding:7px;gap:4px}
+.search input,.search select{flex:1;min-width:140px;border:0;outline:0;padding:13px 15px;font:inherit;color:var(--navy);background:transparent}
+.search input{min-width:220px}.search select{border-left:1px solid var(--line)}.search .btn{min-width:130px}
+.search input::placeholder{color:#8a94a9}.quick-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:9px;margin-top:18px;color:#d4def2;font-size:12px}
+.quick-links button{color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:5px 12px;font-size:12px}.quick-links button:hover{background:rgba(255,255,255,.2)}
+.demo-disclaimer{margin:14px 0 0;color:#d4def2;font-size:11px}
+.wrap{max-width:1200px;margin:0 auto;padding:28px 24px 48px;display:grid;grid-template-columns:220px minmax(0,1fr) 300px;gap:18px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:13px;padding:18px;box-shadow:var(--shadow)}
+.filters{position:sticky;top:88px}.filters h3{margin:0 0 14px;font-size:16px}.filters label{display:flex;gap:8px;padding:5px 0;cursor:pointer;color:#45516b}.filters input{accent-color:var(--blue)}
+.filters hr{border:0;border-top:1px solid var(--line);margin:14px 0}
+.results-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.results-head h2{font-size:19px;margin:0}.results-head .note{white-space:nowrap}
+.job{margin-bottom:12px;cursor:pointer;transition:box-shadow .15s,border-color .15s}.job:hover{box-shadow:0 8px 24px rgba(15,29,64,.12);border-color:#c8d4f5}
+.job.sel{border-color:var(--blue);box-shadow:0 0 0 2px rgba(49,94,234,.08)}.job h2{margin:0;font-size:17px;color:var(--navy);line-height:1.35}.job:hover h2{color:var(--blue)}
+.co{color:var(--mut);margin:3px 0 10px}.meta{display:flex;flex-wrap:wrap;gap:8px 14px;color:var(--mut);font-size:13px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}.tag{background:#f0f3f9;color:#465571;border-radius:6px;padding:4px 9px;font-size:12px}
+.tag.hit{background:#e2f5eb;color:#126942}.tag.miss{background:#fff0ee;color:var(--bad)}
 .row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.score{font-weight:700;border-radius:20px;padding:4px 12px;font-size:13px;white-space:nowrap}
-.s-hi{background:#dff6ec;color:var(--ok)}.s-mid{background:#fff3dc;color:var(--warn)}.s-lo{background:#fdeceb;color:var(--bad)}
-.posted{font-size:12px;color:var(--mut);margin-top:8px}
-.detail h2{margin:0}.detail h4{margin:16px 0 6px}.detail ul{margin:0;padding-left:18px;line-height:1.6}
-.hr{background:#f6f9ff;border:1px dashed #b9c9f5;border-radius:10px;padding:12px;margin-top:14px}
+.score{font-weight:700;border-radius:20px;padding:4px 10px;font-size:12px;white-space:nowrap}
+.s-hi{background:#e2f5eb;color:var(--ok)}.s-mid{background:#fff2dc;color:var(--warn)}.s-lo{background:#fff0ee;color:var(--bad)}
+.posted{font-size:12px;color:var(--mut);margin-top:11px}
+.detail h2{margin:0;font-size:18px;line-height:1.35}.detail h4{margin:16px 0 6px}.detail ul{margin:0;padding-left:18px;line-height:1.7;color:#45516b}
+.hr{background:#f6f8fd;border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:14px}
 .hr a{color:var(--blue);word-break:break-all}
-textarea,input[type=text],input[type=email]{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;font:inherit;margin:6px 0}
+textarea,input[type=text],input[type=email]{width:100%;border:1px solid #dce2ed;border-radius:8px;padding:10px;font:inherit;margin:6px 0;color:var(--navy)}
 textarea{min-height:110px;resize:vertical}
-.drop{border:2px dashed #b9c9f5;border-radius:10px;padding:14px;text-align:center;color:var(--mut);margin-bottom:8px}
-.pill{display:inline-block;background:#dff6ec;color:#0c7a50;border-radius:12px;padding:2px 10px;font-size:12px;margin:2px 3px 2px 0}
-.modal{position:fixed;inset:0;background:rgba(15,29,64,.55);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+.drop{border:1px dashed #9aafea;border-radius:10px;padding:14px;text-align:center;color:var(--mut);margin-bottom:8px;background:#f8faff}
+.pill{display:inline-block;background:#e2f5eb;color:#126942;border-radius:12px;padding:2px 10px;font-size:12px;margin:2px 3px 2px 0}
+.modal{position:fixed;inset:0;background:rgba(11,24,53,.62);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
 .modal.on{display:flex}.modal .card{max-width:480px;width:100%;max-height:90vh;overflow:auto}
-.note{font-size:12px;color:var(--mut)}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 20px;border-radius:24px;display:none;z-index:30}
-:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.note{font-size:12px;color:var(--mut)}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 20px;border-radius:24px;display:none;z-index:30;box-shadow:var(--shadow)}
+:focus-visible{outline:2px solid #7092ff;outline-offset:2px}
+@media(max-width:1050px){.wrap{grid-template-columns:210px minmax(0,1fr)}.wrap>aside:last-child{grid-column:2;display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:14px}.wrap>aside:last-child .detail{margin-top:0!important}}
+@media(max-width:700px){header{height:64px;padding:0 18px}header nav{gap:12px}header nav a{display:none}.hero{padding:42px 18px 34px}.hero h1{font-size:34px}.hero p{font-size:14px}.search{display:grid;grid-template-columns:1fr 1fr;border-radius:12px;padding:9px}.search input{grid-column:1/-1;min-width:0;border-bottom:1px solid var(--line)}.search select{min-width:0;padding:12px 8px}.search select+select{border-left:1px solid var(--line)}.search .btn{grid-column:1/-1}.wrap{display:flex;flex-direction:column;padding:18px 14px 36px}.wrap>aside,.wrap>section{width:100%}.filters{position:static}.wrap>aside:last-child{display:flex;flex-direction:column}.wrap>aside:last-child .detail{width:100%}.results-head{align-items:flex-start}.card{padding:15px}.row{gap:6px}.score{padding:4px 8px}}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">Test<b>Hire</b> <span style="font-size:12px;color:var(--mut);font-weight:500">UAE</span></div>
-  <nav><button class="btn ghost sm" onclick="document.getElementById('cvbox').scrollIntoView({behavior:'smooth'})">Upload CV</button></nav>
+  <div class="logo">Testora<b>Jobs</b></div>
+  <nav><a href="#jobs">Browse jobs</a><a href="#cvbox">CV matching</a><button class="btn ghost sm" onclick="document.getElementById('cvbox').scrollIntoView({behavior:'smooth'})">Upload CV</button></nav>
 </header>
 
 <section class="hero">
-  <h1>Find your next Software Tester job in the UAE</h1>
-  <p>QA, Automation, SDET, Performance &amp; Mobile testing roles across Dubai, Abu Dhabi, Sharjah and more</p>
-  <div class="search">
+ <div class="hero-inner">
+  <span class="eyebrow">Your next opportunity starts here</span>
+  <h1>Find a software testing job that fits you</h1>
+  <p>Explore QA, automation, SDET and testing roles across the UAE.</p>
+  <form class="search" id="searchForm">
     <input id="q" placeholder="Skills, designation or company" aria-label="Keyword">
     <select id="city" aria-label="City"><option value="">All UAE</option><option>Dubai</option><option>Abu Dhabi</option><option>Sharjah</option><option>Ajman</option><option>Ras Al Khaimah</option></select>
     <select id="expSel" aria-label="Experience"><option value="">Experience</option><option value="0">Fresher (0 yrs)</option><option value="2">2 yrs</option><option value="5">5 yrs</option><option value="8">8+ yrs</option></select>
-    <button class="btn" onclick="render()">Search</button>
-  </div>
+    <button class="btn" type="submit">Search jobs</button>
+  </form>
+  <div class="quick-links"><span>Popular:</span><button type="button" data-type="Automation">Automation</button><button type="button" data-type="Manual">Manual testing</button><button type="button" data-query="SDET">SDET</button><button type="button" data-type="Performance">Performance</button></div>
+  <p class="demo-disclaimer">Demo listings only — job details and recruiter contacts are sample placeholders.</p>
+ </div>
 </section>
 
-<main class="wrap">
+<main class="wrap" id="jobs">
   <aside class="card filters" aria-label="Filters">
     <h3>Filters</h3>
     <b>Job type</b>
@@ -80,7 +91,7 @@ textarea{min-height:110px;resize:vertical}
   </aside>
 
   <section>
-    <div id="count" style="margin-bottom:10px;font-weight:600"></div>
+    <div class="results-head"><h2>Latest opportunities</h2><div id="count" class="note"></div></div>
     <div id="list"></div>
   </section>
 
@@ -298,6 +309,14 @@ async function sendCV(){
   closeModal();
 }
 function toast(t){const e=document.getElementById("toast");e.textContent=t;e.style.display="block";setTimeout(()=>e.style.display="none",3200);}
+document.getElementById("searchForm").addEventListener("submit",e=>{e.preventDefault();render();});
+document.querySelectorAll(".quick-links button").forEach(button=>button.addEventListener("click",()=>{
+  const type=button.dataset.type;
+  document.querySelectorAll("[name=type]").forEach(input=>{input.checked=type ? input.value===type : false;});
+  document.getElementById("q").value=button.dataset.query||"";
+  render();
+  document.getElementById("jobs").scrollIntoView({behavior:"smooth"});
+}));
 render();
 </script>
 </body>
